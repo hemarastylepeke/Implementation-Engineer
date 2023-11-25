@@ -1,0 +1,130 @@
+{% load static tailwind_tags %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    {% tailwind_css %}
+</head>
+<body>
+    <div class="flex justify-center items-center" style="margin-top: 160px; margin-bottom: 100px;">
+        <div class="ml-5 mr-5 px-5 mx-auto rounded-[5px] bg-primary w-full max-w-md py-5">
+            <h2 class="text-center justify-center font-barlow font-semibold text-black text-xl mb-2 mt-5">
+                SIGNUP
+            </h2>
+            <hr class="border-1 border-secondary mb-1">
+            <form class="signup w-full" id="signup_form" method="post" action="{% url 'account_signup' %}">
+                {% csrf_token %}
+                <div class="w-full">
+                    <!-- Email field -->
+                    <div class="text-red-600 mb-4 flex flex-row">
+                        <p> {{ form.email.errors | safe }}</p>
+                    </div>
+                    <label for="id_email" class="block mb-2 text-sm font-medium font-barlow text-black">Your
+                        email</label>
+                    <input type="email" name="email" class="bg-transparent border border-secondary text-gray-700 font-barlow text-sm rounded-[5px] focus:ring-secondary focus:border-secondary block w-full p-2.5" placeholder="Enter your Email address" autocomplete="email" maxlength="320" required id="id_email">
+                </div>
+                <div class="w-full">
+                    <!-- Password 1 -->
+                    <div class="text-red-600 mb-4 flex flex-row">
+                        {{ form.password1.errors | safe }}
+                    </div>
+                    <label for="id_password1" class="block mb-2 text-sm font-medium font-barlow text-black">Enter your password</label>
+                    <div class="relative">
+                        <input type="password" name="password1" placeholder="Enter Password" autocomplete="new-password" required id="id_password1" class="bg-transparent border border-secondary text-gray-700 font-barlow text-sm rounded-[5px] focus:ring-secondary focus:border-secondary block w-full p-2.5 pr-10">
+                        <span id="togglePassword1" class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer">
+                            <i class="fa-regular fa-eye"></i>
+                            <i class="fa-regular fa-eye-slash hidden"></i>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="w-full">
+                    <!-- Password 2 -->
+                    <div class="text-red-600 mb-4 flex flex-row">
+                        {{ form.password2.errors | safe }}
+                    </div>
+                    <label for="id_password2" class="block mb-2 text-sm font-medium font-barlow text-black">Confirm your password</label>
+                    <div class="relative">
+                        <input type="password" name="password2" class="bg-transparent border border-secondary text-gray-700 font-barlow text-sm rounded-[5px] focus:ring-secondary focus:border-secondary block w-full p-2.5" placeholder="Confirm your password" autocomplete="new-password" required id="id_password2">
+                        <span id="togglePassword2" class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer">
+                            <i class="fa-regular fa-eye"></i>
+                            <i class="fa-regular fa-eye-slash hidden"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="text-sm text-secondary mt-2"></div>
+                <div id="password-instructions" class="text-sm text-secondary mt-2 mb-2"></div>
+                {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                {% endif %}
+                <button type="submit"
+                    class="rounded-[5px] text-black font-semibold font-barlow w-full p-2 mt-4 bg-secondary">
+                        <span id="signupText">Signup</span>
+                        <span id="signupSpinner" style="display: none;">
+                            <i class="fa-solid fa-spinner fa-spin fa-sm"></i> Please Wait...
+                        </span>
+                </button>
+            </form>
+            <div class="flex flex-row justify-between w-full mt-4 items-center text-center">
+                <a href="{% url 'account_reset_password' %}"
+                   class="text-sm text-secondary font-extrabold font-barlow"> {% trans "Forgot Password?" %}</a>
+                <a href="{% url 'account_login' %}"
+                   class="text-sm text-secondary font-extrabold font-barlow ml-auto">Login</a>
+            </div>
+        </div>
+    </div>
+    </div>
+    
+    <script>
+        // Button spinner on submit code
+        const signupButton = document.getElementById("signupButton");
+        const signupText = document.getElementById("signupText");
+        const signupSpinner = document.getElementById("signupSpinner");
+        const signupForm = document.getElementById("signup_form");
+        // Add a submit event listener to the form
+        signupForm.addEventListener("submit", (event) => {
+            // Check if the form is valid
+            if (!signupForm.checkValidity()) {
+                // Form is not valid, prevent submission and return
+                event.preventDefault();
+                return;
+            }
+            // Hide the text and display the spinner
+            signupText.style.display = "none";
+            signupSpinner.style.display = "block";
+            // Deactivate the button
+            signupButton.disabled = true;
+        });
+    
+        // Code to toggle password visibility.
+    
+        function togglePasswordVisibility(inputId, toggleId) {
+            const passwordInput = document.getElementById(inputId);
+            const togglePasswordButton = document.getElementById(toggleId);
+    
+            togglePasswordButton.addEventListener("click", () => {
+                const eyeIcon = togglePasswordButton.querySelector(".fa-regular.fa-eye");
+                const eyeSlashIcon = togglePasswordButton.querySelector(".fa-regular.fa-eye-slash");
+    
+                if (passwordInput.type === "password") {
+                    passwordInput.type = "text";
+                    eyeIcon.classList.add("hidden");
+                    eyeSlashIcon.classList.remove("hidden");
+                } else {
+                    passwordInput.type = "password";
+                    eyeIcon.classList.remove("hidden");
+                    eyeSlashIcon.classList.add("hidden");
+                }
+            });
+        }
+        togglePasswordVisibility("id_password1", "togglePassword1");
+        togglePasswordVisibility("id_password2", "togglePassword2");
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{% load static tailwind_tags %}
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/003d065c33.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="icon" type="image/x-icon" href="{% static 'images/icon.png' %}">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/custome.css' %}">
+    <title>Logout</title>
+    {% tailwind_css %}
+</head>
+<body>
+  <div class="py-4 px-2 h-screen">
+    <div class="py-6 md:pr-4 mt-14">
+        <div class="flex flex-col gap-4 max-w-xl mx-auto bg-primary p-4">
+          <h1 class="text-black font-semibold text-2xl text-center">{% trans "Sign Out" %}</h1>
+          <hr>
+          <p>{% trans 'Are you sure you want to sign out?' %}</p>
+          <form method="post" action="{% url 'account_logout' %}">
+            {% csrf_token %}
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+            {% endif %}
+            <div class="flex flex-row justify-between">
+              <button type="submit" class="bg-red-500 hover:bg-red-600 p-2 text-white font-semibold rounded-[5px]"><span class="las la-power-off" style="font-size: 18px;"></span> {% trans 'Sign Out' %}</button>
+              <button type="button" onclick="window.history.back()" class="bg-orange-500 hover:bg-orange-700 text-white font-semibold rounded-[5px] p-2"><span class="las la-ban" style="font-size: 18px;"></span> Go Back</button>
+            </div>
+          </form>
+        </div>
+      </div>
+  </div>
+</body>
+</html>
+{% load i18n %}
+
+
+

@@ -1,0 +1,41 @@
+{% load static tailwind_tags %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% tailwind_css %}
+</head>
+<body>
+    <div class="flex justify-center items-center" style="margin-top: 160px;">
+        <div class="ml-5 mr-5 px-5 bg-primary mx-auto rounded-[5px] w-full max-w-md py-8">
+            <h2 class="text-center justify-center font-barlow font-semibold text-cream text-xl mb-5 mt-5">
+                LANDING PAGE
+            </h2>
+            <hr class="border-1 border-secondary mb-5">
+            <P class="text-black font-barlow text-center items-center">
+                This is the landing page, please choose an action.
+            </P>
+            <div class="mt-5">
+                <a href="{% url 'account_signup' %}">
+                    <button type="submit" id="signinButton"
+                    class="w-full text-xl text-cream font-barlow bg-red-400 hover:bg-darkcream hover:text-primary focus:ring-4 focus:outline-none focus:ring-primary font-semibold rounded-[5px] px-4 py-2 text-center mr-3 md:mr-0">
+                    <span id="signinText">Signup</span>
+                </button>
+                </a>
+            </div>
+            <div class="mt-5">
+                <a href="{% url 'account_login' %}">
+                    <button type="submit" id="signinButton"
+                        class="w-full text-xl text-cream font-barlow bg-secondary hover:bg-darkcream hover:text-primary focus:ring-4 focus:outline-none focus:ring-primary font-semibold rounded-[5px] px-4 py-2 text-center mr-3 md:mr-0">
+                        <span id="signinText">Login</span>
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

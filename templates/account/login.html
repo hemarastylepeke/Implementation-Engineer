@@ -1,0 +1,107 @@
+{% load static tailwind_tags %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    {% tailwind_css %}
+</head>
+<body>
+    <div class="flex justify-center items-center" style="margin-top: 160px;">
+        <div class="ml-5 mr-5 px-5 bg-primary mx-auto rounded-[5px] w-full max-w-md py-8">
+            <h2 class="text-center justify-center font-barlow font-semibold text-cream text-xl mb-5 mt-5">
+                {% trans "Sign In" %}
+            </h2>
+            <hr class="border-1 border-secondary mb-5">
+            <!-- Social authentication -->
+    
+            <!-- Social authentication code end -->
+            <form class="login" method="POST" action="{% url 'account_login' %}" id="loginForm">
+                {% csrf_token %}
+                {% for error in form.non_field_errors %}
+                <div class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-darkcream"
+                    role="alert">
+                    <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                    </svg>
+                    <span class="sr-only">Info</span>
+                    <div>
+                        <span class="font-medium">{{ error }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="mb-6">
+                    {% include 'account/_form_errors.html' with form_field=form.email %}
+                    <label for="id_login" class="block mb-2 text-sm font-medium font-barlow text-cream">Your email</label>
+                    {% render_field form.login type='email' maxlength='320' name='login' autocomplete='email' id='id_login' class='bg-transparent border border-secondary text-secondary text-sm rounded-[5px] focus:ring-secondary focus:border-secondary block w-full p-2.5' placeholder='Enter your email' %}
+                </div>
+    
+                <div class="mb-6">
+                    {% include 'account/_form_errors.html' with form_field=form.password1 %}
+                    <label for="id_password" class="block mb-2 text-sm font-medium font-barlow text-cream">Enter your
+                        password</label>
+                    {% render_field form.password type="password" name="password" autocomplete="current-password" id="id_password" class="bg-transparent border border-secondary text-secondary text-sm rounded-[5px] focus:ring-secondary focus:border-secondary block w-full p-2.5" placeholder="Enter your password.."%}
+                </div>
+    
+                <div class="flex mb-6">
+                    {% include 'account/_form_errors.html' with form_field=form.password1 %}
+                    <div class="flex items-center h-5">
+                        {% render_field form.remember type="checkbox" name="remember" autocomplete="new-password" id="id_remember" class="w-4 h-4 border border-secondary rounded-[5px] bg-transparent focus:ring-3 focus:ring-secondary" %}
+                        <label for="id_remember" class="text-sm font-medium text-cream font-barlow ml-2">Remember me</label>
+                    </div>
+                </div>
+                    
+                {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                {% endif %}
+    
+                <div class="mt-5 flex justify-center">
+                    <button type="submit" id="signinButton"
+                        class="w-full text-xl text-cream font-barlow bg-secondary hover:bg-darkcream hover:text-primary focus:ring-4 focus:outline-none focus:ring-primary font-semibold rounded-[5px] px-4 py-2 text-center mr-3 md:mr-0">
+                        <span id="signinText">{% trans "Sign In" %}</span>
+                        <span id="signinSpinner" style="display: none;">
+                            <i class="fa-solid fa-spinner fa-spin fa-sm"></i> Authenticating...
+                        </span>
+                    </button>
+                </div>
+            </form>
+            <div class="flex flex-row justify-between w-full mt-4 items-center text-center">
+                <a href="{% url 'account_reset_password' %}"
+                   class="text-sm text-secondary font-extrabold font-barlow"> {% trans "Forgot Password?" %}</a>
+                <a href="{% url 'account_signup' %}"
+                   class="text-sm text-secondary font-extrabold font-barlow ml-auto"> Signup</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const signInButton = document.getElementById("signinButton");
+        const signInText = document.getElementById("signinText");
+        const signInSpinner = document.getElementById("signinSpinner");
+        const loginForm = document.getElementById("loginForm");
+    
+        // Add a submit event listener to the form
+        loginForm.addEventListener("submit", (event) => {
+            // Check if the form is valid
+            if (!loginForm.checkValidity()) {
+                // Form is not valid, prevent submission and return
+                event.preventDefault();
+                return;
+            }
+    
+            // Hide the text and display the spinner
+            signInText.style.display = "none";
+            signInSpinner.style.display = "block";
+            // Deactivate the button
+            signInButton.disabled = true;
+        });
+    </script>
+</body>
+</html>
