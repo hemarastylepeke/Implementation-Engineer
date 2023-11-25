@@ -523,6 +523,7 @@ Packages installed were Tailwind, Django and Django allauth done using the comma
 > python -m pip install django-tailwind 
 
 > pip install whitenoise
+> pip install gunicorn
 
  __Software Functionalities__
 
@@ -535,6 +536,13 @@ The functionalities of this software will be very basic:
 A live demo of this project was hosted on Railway using Gunicorn and nginx as the Proxy server. Feel free to test it out. The link is below.
 
 [Live Demo](https://web-production-e0eb.up.railway.app/)
+
+To run the project locally on your machine, follow the steps below:
+* git clone 
+* Navigate to the project's directory
+* pip install -r requirements.txt
+* python manage.py runserver
+* Access the website via 127.0.0.1:8000 on your browser
 
 
 
