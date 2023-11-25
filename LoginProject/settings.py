@@ -20,7 +20,6 @@ SECURE_SSL_REDIRECT = True
 
 ALLOWED_HOSTS = ["web-production-e0eb.up.railway.app"]
 
-
 # Application definition
 
 INSTALLED_APPS = [
