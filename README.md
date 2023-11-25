@@ -460,6 +460,7 @@ The following software and packages was used to design and implement the Login s
 * Django Allauth package to handle authentication flow.
 * Tailwind css and HTML for User Interface Design.
 * Figma for Designing the UI.
+* Gunicorn alongside ngix as proxy server for deplyment hosted on Railway.
 
 <P>
 The following are the Design mockups of the system.
