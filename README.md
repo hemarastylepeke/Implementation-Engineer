@@ -533,6 +533,8 @@ The functionalities of this software will be very basic:
 
 A live demo of this project was hosted on Railway using Gunicorn and nginx as the Proxy server. Feel free to test it out. The link is below.
 
+[Live Demo](https://web-production-e0eb.up.railway.app/)
+
 
 
 
